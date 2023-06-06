@@ -1,0 +1,19 @@
+# Dependencies that are needed for the development, testing, and use of notebooks,
+# but are not strictly needed when deploying the application. 
+
+# We always include ipykernel as we'll usually want to make a kernel install 
+# part of our default make init - so we can use notebook within the project's virtual environment:
+ipykernel
+nbformat
+nbconvert
+
+# Static analysis and code help tools:
+pycodestyle
+pydocstyle
+pylint
+autopep8
+mypy
+
+# Testing:
+pytest
+pytest-cov

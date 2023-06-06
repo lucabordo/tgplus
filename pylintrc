@@ -1,0 +1,67 @@
+# PYLINT CONFIGURATION - this configures the types of errors/warnings we want to detect using static analysis.
+# Many more things can be set, see pylintrc examples on the web, e.g.:
+# https://github.com/PyCQA/pylint/blob/0eeb67749b6aa016db61d87e55a1f7a7e459b352/pylintrc#L142
+
+[MASTER]
+
+# Use multiple processes to speed up Pylint.
+jobs=4
+
+# Disable the message, report, category or checker with the given id(s). You
+# can either give multiple identifiers separated by comma (,) or put this
+# option multiple times (only on the command line, not in the configuration
+# file where it should appear only once).You can also use "--disable=all" to
+# disable everything first and then reenable specific checks. For example, if
+# you want to run only the similarities checker, you can use "--disable=all
+# --enable=similarities". If you want to run only the classes checker, but have
+# no Warning level messages displayed, use"--disable=all --enable=classes
+# --disable=W"
+disable=
+    len-as-condition,
+    no-else-return,
+    too-few-public-methods,
+    trailing-whitespace,
+    fixme,
+    logging-not-lazy,
+    logging-format-interpolation,
+    logging-fstring-interpolation,
+
+    # We could decide to uncomment the below:
+    #too-many-statements,
+    #wrong-import-order,
+    #unused-import,
+    #invalid-name,
+    #too-many-locals,
+    #too-many-arguments,
+    #missing-module-docstring,
+    #too-many-instance-attributes,
+    #unused-wildcard-import,
+
+[FORMAT]
+
+# Maximum number of characters on a single line.
+max-line-length=100
+
+# Maximum number of arguments before we get a too-many-arguments warning:
+max-args=6
+
+[TYPECHECK]
+
+# List of members which are set dynamically and missed by Pylint inference
+# system, and so shouldn't trigger E1101 when accessed. Python regular
+# expressions are accepted.
+generated-members=numpy.*, torch.*
+
+[BASIC]
+
+# Accepted local variable names could be customized as follows:
+#variable-rgx=[a-z_][a-zA-Z0-9_]{0,30}$
+#variable-name-hint=[a-z_][a-zA-Z0-9_]{0,30}$
+
+# Accepted argument names could be customized as follows:
+#argument-rgx=[a-z_][a-zA-Z0-9_]{0,30}$
+#argument-name-hint=[a-z_][a-zA-Z0-9_]{0,30}$
+
+# Accepted attribute names could be customized as follows:
+#attr-rgx=[a-z_][a-zA-Z0-9_]{0,30}$
+#attr-name-hint=[a-z_][a-zA-Z0-9_]{0,30}$

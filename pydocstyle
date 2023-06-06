@@ -1,0 +1,9 @@
+[pydocstyle]
+inherit = false
+match = .*\.py
+# D1: Missing docstrings - we allow missing in __init__ / magic methods
+# D2: Whitespace in docstrings - we skip most of these checks
+# D3: Quote issues
+# D4: Docstring Content Issues - we handpick
+ignore = D4,D2,D105,D107
+add_select = D210,D211,D403,D404,D405,D406,D414,D417

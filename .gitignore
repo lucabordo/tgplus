@@ -1,0 +1,12 @@
+.DS_Store
+.venv
+.idea/
+**.egg-info/
+.ipynb_checkpoints
+.mypy_cache/
+.dmypy.json
+__pycache__/
+tests/__pycache__
+*.py[cod]
+*$py.class
+

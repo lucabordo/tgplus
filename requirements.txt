@@ -1,0 +1,14 @@
+# This has the dependencies strictly needed by the code ("deployment" dependencies).
+#
+# Dependencies for the development, testing, and use of notebooks that use the code, are in requirements-dev.
+# 
+# Note that we use requirements files to capture the *direct* dependencies of the project;
+# There are indirect dependencies, too; the version pinning that helps reproducibility is done through a
+# constraints.txt file, which specifies versions for the transitive closure of all dependencies.
+
+# Basics:
+numpy
+pandas
+
+# Utilities:
+matplotlib

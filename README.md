@@ -6,11 +6,11 @@ This is an exploratory python project.
 
 This project includes a Makefile that automates the steps for:
 - The creation (reproducibly) of the virtual environment needed for working on the project: `make dev`;
-- Any tooling on the code, such as static analysis, tests, to be run either locally or as part of a CI: `make checks`;
+- Any tooling on the code, such as static analysis, tests, to be run either locally or as part of a CI (note done): `make checks`;
 - Any other command frequently used in development/test/production and worth automating,
   for instance exposing a kernel for data science work within a notebooks, commands to update the venv, etc.
 
-Note that the `make` command assumes that an appropriate version of Python (Python 3.10) is installed
+Note that the `make` command assumes that an appropriate version of Python (I only tested Python 3.10) is installed
 as the executable `python`. This can be customised within the Makefile manually (for now) if the 
 selected Python interpreter is present in another path. 
 

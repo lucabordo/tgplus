@@ -12,3 +12,11 @@ pandas
 
 # Utilities:
 matplotlib
+
+# ML:
+torch
+sentence-transformers
+
+# API stuff:
+fastapi
+uvicorn[standard]

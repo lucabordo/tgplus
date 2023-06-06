@@ -1,11 +1,11 @@
-# Template
+# Goal
 
 This is an exploratory python project.
 
 # Setup
 
 This project includes a Makefile that automates the steps for:
-- The creation (reproducibly) of the virtual environment needed for the project: `make dev`;
+- The creation (reproducibly) of the virtual environment needed for working on the project: `make dev`;
 - Any tooling on the code, such as static analysis, tests, to be run either locally or as part of a CI: `make checks`;
 - Any other command frequently used in development/test/production and worth automating,
   for instance exposing a kernel for data science work within a notebooks, commands to update the venv, etc.

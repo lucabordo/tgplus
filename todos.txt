@@ -5,12 +5,20 @@ Limitations / Improvements:
 - Usually I'd use training and test subsets of the data as well of course as *validation*;
   given the limited data and the training scenario I haven't used validation here
 
+General modeling approach:
+- Consider alternatives to the embedding + simple multilabel classifier approach used here
+
 Embedding model:
+- Investigate text curation - which models are happy with non-curated text/symbols (not words or characters removed?)
 - Consider various alternatives of models (we could make configurable...)
+- Consider the options for fine tuning of the embedding model itself against relevant data -
+  we just use a pre-trained (which is probably fine)
 - Make the code parallel (it is, optionally, but no clear speed-up)
 - Make the code GPU friendly (I worked on laptop only ATM)
 - Remove the caching of embedding (if fast enough) or make simpler and 
   deal with invalidation depending on version (use joblib?...)
+- Addtional checks of the embeddings (Could be UMAP-like dimensinality reduction to visualize 
+  similarity, or checks that description similarity matches distance in embedding space)
 
 Minor stuff:
 - Automated data loading instead of currently manual CSV load (see comments in data/readme)

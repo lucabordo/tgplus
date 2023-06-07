@@ -178,7 +178,7 @@ class ScikitLearnPredictor(Predictor):
     encoder: Encoder = field(default_factory=load_encoder)
 
     # Override
-    def __call__(self, desription: str) -> str:
+    def __call__(self, description: str) -> str:
         """
         Given a movie description, predict a genre.
 
@@ -189,7 +189,7 @@ class ScikitLearnPredictor(Predictor):
         prediction_size = len(GENRES_TAXONOMY)
 
         # Embed the text into vector space:
-        [embedding] = self.encoder([desription])
+        [embedding] = self.encoder([description])
         assert embedding.ndim == 1
 
         # Apply the classifier to the feature vector:

@@ -43,12 +43,6 @@ env:
 	$(PYTHON) -m pip install -e . -c constraints.txt
 
 
-# Initialize a dev environment - virtual env, extra stuff needed for testing and dev:
-.PHONY: dev
-dev: env
-	$(PYTHON) -m pip install --upgrade -r requirements-dev.txt -c constraints.txt
-
-
 # Run type checking:
 .PHONY: type
 type:
@@ -126,3 +120,9 @@ kernel:
 clean:
 	-$(PYTHON) -m jupyter kernelspec uninstall -y $(KERNEL_NAME)
 	-rm -r $(VENV)
+
+
+# Initialize a dev environment - virtual env, extra stuff needed for testing and dev:
+.PHONY: dev kernel
+dev: env
+	$(PYTHON) -m pip install --upgrade -r requirements-dev.txt -c constraints.txt

@@ -2,10 +2,10 @@
 
 This is an exploratory python project.
 
-# Quick summary
+# Cheat sheet
 
 ```bash
-# Populate the training data 
+# Populate the training data - yes this has to be done manually:
 cp some_original_download_folder/movies_data.csv ./data/
 
 # Create the virtual environment and tooling for the project:

@@ -8,7 +8,7 @@ This is an exploratory python project.
 # Populate the training data - yes this has to be done manually:
 cp some_original_download_folder/movies_data.csv ./data/
 
-# Create the virtual environment and tooling for the project:
+# Create the virtual environment and install any tooling for the project:
 make dev
 
 # Optionally, run a bunch of sanity checks on the code;
@@ -22,7 +22,7 @@ source ./venv/bin/activate
 # should generate a data/model.joblib file:
 python tgplus/training.py
 
-# Run the api
+# Run the api:
 python tgplus/api.py
 ```
 

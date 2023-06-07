@@ -10,3 +10,7 @@ tests/__pycache__
 *.py[cod]
 *$py.class
 
+# Ignore anything under data; exceptions like readme will be --forced added:
+data/
+
+

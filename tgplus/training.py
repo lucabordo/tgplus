@@ -1,6 +1,7 @@
 """
 Code for training the model.
 """
+from pathlib import Path
 from typing import Sequence, Tuple
 
 import numpy as np
@@ -58,15 +59,20 @@ def load_encoder(parallel: bool = False) -> Encoder:
     return encode_function
 
 
-def _calculate_or_reload_embeddings(
+def calculate_or_reload_embeddings(
         data: TextWithGenres,
         allow_reuse: bool,
-        name: str,
+        path: Path,
 ) -> TextWithGenresAndEmbeddings:
     """
     Calculate and save, or reuse if previously calculated, a dataset enriched with embeddings.
+
+    Note that embeddings, if saved, are just dumped as numpy arrays. This is hacky and violates
+    a principle I'm keen on: self-containedness (which embedding corresponds to what data point!).
+    Ideally and if serialization is really needed we'd evolve that to a proper way to save 
+    TextWithGenresAndEmbeddings objects in a way that is self-contained, for instance as tabular
+    data (saved, say, in parquet format).
     """
-    path = DATA_CACHE / name
     if path.exists():
         print("Reloading embeddings from", path)
         embeddings2d = np.load(path)
@@ -106,8 +112,10 @@ def load_data_with_embeddings(
     """
     training, test = get_movies_data(test_fraction=test_fraction, seed=seed)
     return (
-        _calculate_or_reload_embeddings(training, allow_reuse, name="embeddings_training.npy"),
-        _calculate_or_reload_embeddings(test, allow_reuse, name="embeddings_test.npy")
+        calculate_or_reload_embeddings(training, allow_reuse, 
+                                       DATA_CACHE / "embeddings_training.npy"),
+        calculate_or_reload_embeddings(test, allow_reuse,
+                                        DATA_CACHE / "embeddings_test.npy")
     )
 
 

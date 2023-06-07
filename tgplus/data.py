@@ -58,6 +58,9 @@ def parse_genres(genre_entry: str) -> List[str]:
 def get_movies_data(test_fraction=0.1) -> Tuple[TextWithGenres, TextWithGenres]:
     """
     Load a dataset that has a bit of pre-processing and some splitting.
+
+    For now we just use a training and test set - shamefully not validation
+    (I see it unlikely I'd use it within time frame).
     """
     # Load as data frame:
     movies_table = get_movies_table()
@@ -74,7 +77,7 @@ def get_movies_data(test_fraction=0.1) -> Tuple[TextWithGenres, TextWithGenres]:
         genre_names = parse_genres(genres)
         data.append((text, genre_names))
     
-    # Split deterministically into two collections - we shamefully do not use validation here:
+    # Split deterministically into two collections:
     prng = RandomState(1245737)
     test_size = int(len(data) * test_fraction)
     test_indices = set(prng.choice(len(data), test_size, replace=False))

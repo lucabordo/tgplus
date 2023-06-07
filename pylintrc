@@ -45,6 +45,9 @@ max-line-length=100
 # Maximum number of arguments before we get a too-many-arguments warning:
 max-args=6
 
+# Maximum number of local variables before we get too-many-locals warning:
+max-locals=20
+
 [TYPECHECK]
 
 # List of members which are set dynamically and missed by Pylint inference

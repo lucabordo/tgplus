@@ -55,7 +55,7 @@ def parse_genres(genre_entry: str) -> List[str]:
     return [genre["name"] for genre in result]
 
 
-def get_movies_data(test_fraction=0.1) -> Tuple[TextWithGenres, TextWithGenres]:
+def get_movies_data(test_fraction=0.1, seed=1245737) -> Tuple[TextWithGenres, TextWithGenres]:
     """
     Load a dataset that has a bit of pre-processing and some splitting.
 
@@ -78,7 +78,7 @@ def get_movies_data(test_fraction=0.1) -> Tuple[TextWithGenres, TextWithGenres]:
         data.append((text, genre_names))
     
     # Split deterministically into two collections:
-    prng = RandomState(1245737)
+    prng = RandomState(seed)
     test_size = int(len(data) * test_fraction)
     test_indices = set(prng.choice(len(data), test_size, replace=False))
     

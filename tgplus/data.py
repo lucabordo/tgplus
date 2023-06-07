@@ -2,18 +2,9 @@
 Access and basic processing of movies data.
 """
 import json
-from pathlib import Path
 from typing import List
 import pandas as pd
-import tgplus
-from tgplus.globals import GENRES_TAXONOMY
-
-
-# Root path of the project:
-PROJECT_ROOT = Path(tgplus.__path__[0]).parent
-
-# Path where we put any data loaded from the internet:
-DATA_CACHE = PROJECT_ROOT / "data"
+from tgplus.globals import GENRES_TAXONOMY, DATA_CACHE
 
 
 def get_movies_table() -> pd.DataFrame:

@@ -1,6 +1,15 @@
 """
 Global definitions common to the data-loading, training code, app... 
 """
+from pathlib import Path
+import tgplus
+
+
+# Root path of the project:
+PROJECT_ROOT = Path(tgplus.__path__[0]).parent
+
+# Path where we put any data loaded from the internet:
+DATA_CACHE = PROJECT_ROOT / "data"
 
 
 # Immutable list of genres we use;

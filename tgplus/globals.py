@@ -3,6 +3,7 @@ Global definitions common to the data-loading, training code, application.
 """
 from pathlib import Path
 from typing import List, Tuple, TypeAlias
+import numpy as np
 import tgplus
 
 
@@ -28,6 +29,10 @@ DATA_CACHE = PROJECT_ROOT / "data"
 # This is a common representation for data from any source, 
 # and whether the collection is used for training, validation or test:
 TextWithGenres: TypeAlias = List[Tuple[str, List[str]]]
+
+# A 1D array with dtype int that has value 1 or 0 for each possible genre;
+# This encodes the subset of genres associated with a movie:
+OneHotGenreEncoding: TypeAlias = np.ndarray
 
 
 class Predictor:
@@ -100,5 +105,35 @@ GENRES_TAXONOMY = (
     'War',
     'Western'
 )
+
+def one_hot_encode(genres: List[str]) -> OneHotGenreEncoding:
+    """
+    Convert e.g. ["Action", "Adventure"]
+    to [1, 1, 0, 0, 0 ....]
+    """
+    result = np.zeros(shape=(len(GENRES_TAXONOMY)), dtype=np.int8)
+    for name in genres:
+        position = _GENRE_TO_INT[name]
+        result[position] = 1
+    return result
+
+
+def one_hot_decode(encoding: OneHotGenreEncoding) -> List[str]:
+    """
+    COnvert e.g. [1, 1, 0, 0, 0, 0, ...]
+    to ["Action", "Adventure"]
+    """
+    return [
+        GENRES_TAXONOMY[position] 
+        for position, value in enumerate(encoding) 
+        if value == 1
+    ]
+
+
+# Reverse mapping from genre to their integer encoding:
+_GENRE_TO_INT = {
+    name: position
+    for position, name in enumerate(GENRES_TAXONOMY)
+}
 
 # endregion

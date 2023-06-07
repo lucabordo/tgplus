@@ -3,6 +3,22 @@ Code for training the model.
 
 This include a main that allows this script to run end to end and save a model.
 The model can then be loaded by the service to be queried for predictions.
+
+The approach we use here is:
+- We use a pre-trained embedding model that encodes the text into a vector space
+  of some pre-defined dimension. We do not fine-tune this model (yet the embedding
+  computation consumes most of the runtime we could afford on a laptop)
+- A simple model is then used that is trained from the features defined by the embdding
+  of the input text, and with labels corresponding to a subset of the genres, that
+  are one-hot encoded (this is multi-label, in the sense that a movie can be labelled
+  as Adventure and as Family, for instance).
+
+Note of the components selected for embedding and multilabel classification have been 
+selected with enough care, reading about internals, tuning of hyper-parameters, etc.
+A bit of care has been put into making the interplay between these components well-defined
+so that in theory trying alternative encoders and/or classifiers should be easy;
+ultimately we'd move towards making this configurable in order to apply some amount of 
+model hyper-parameter tuning. This would need proper metrics though!
 """
 from dataclasses import dataclass, field
 from pathlib import Path

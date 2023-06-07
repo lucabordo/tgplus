@@ -1,9 +1,8 @@
 """
-Global definitions common to the data-loading, training code, app... 
+Global definitions common to the data-loading, training code, application.
 """
 from pathlib import Path
-from typing import List, Tuple, TypeAlias, Callable, Sequence
-import numpy as np
+from typing import List, Tuple, TypeAlias
 import tgplus
 
 
@@ -60,17 +59,6 @@ class Predictor:
         Save the model to disk.
         """
         raise NotImplementedError
-
-
-# A 1D numpy array of dtype float that represents text embedded in some vector space:
-Embedding: TypeAlias = np.ndarray
-
-# A (usually, pre-trained) model that encodes text into some embedding space;
-# This takes inputs by batches to leave room for parallel (CPU or GPU) processing:
-Encoder: TypeAlias = Callable[[Sequence[str]], Sequence[Embedding]]
-
-# A TextWithGenres enriched with pre-calculated embeddings:
-TextWithGenresAndEmbeddings: TypeAlias = List[Tuple[str, List[str], Embedding]]
 
 # endregion
 

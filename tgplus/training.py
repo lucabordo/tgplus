@@ -5,22 +5,33 @@ This include a main that allows this script to run end to end and save a model.
 The model can then be loaded by the service to be queried for predictions.
 """
 from pathlib import Path
-from typing import Sequence, Tuple
+from typing import Sequence, Tuple, TypeAlias, Callable, List
 
 import numpy as np
 from sentence_transformers import SentenceTransformer
 from tqdm import tqdm
 
 from tgplus.data import get_movies_data
-from tgplus.globals import (
-    Encoder,
-    Embedding, 
-    Predictor,
-    DATA_CACHE, 
-    TextWithGenres, 
-    TextWithGenresAndEmbeddings
-)
+from tgplus.globals import Predictor, DATA_CACHE, TextWithGenres
 
+
+# region Type definitions
+# These types are custom for the specific models we are considering,
+# and do not need to be exposed in globals.py which is for shared content
+
+# A 1D numpy array of dtype float that represents text embedded in some vector space:
+Embedding: TypeAlias = np.ndarray
+
+# A (usually, pre-trained) model that encodes text into some embedding space;
+# This takes inputs by batches to leave room for parallel (CPU or GPU) processing:
+Encoder: TypeAlias = Callable[[Sequence[str]], Sequence[Embedding]]
+
+# A TextWithGenres enriched with pre-calculated embeddings:
+TextWithGenresAndEmbeddings: TypeAlias = List[Tuple[str, List[str], Embedding]]
+
+# endregion 
+
+# region Encoding (i.e. transformation of text into embeddings)
 
 def load_encoder(parallel: bool = False) -> Encoder:
     """
@@ -122,6 +133,9 @@ def load_data_with_embeddings(
                                        DATA_CACHE / "embeddings_test.npy")
     )
 
+# endregion
+
+# region Model from embeddings to genre
 
 def train_model(training_data: TextWithGenresAndEmbeddings) -> Predictor:
     """
@@ -129,6 +143,9 @@ def train_model(training_data: TextWithGenresAndEmbeddings) -> Predictor:
     """
     raise NotImplementedError
 
+# endregion
+
+# region scripting
 
 def main():
     """
@@ -140,3 +157,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# endregion

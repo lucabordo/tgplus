@@ -5,7 +5,7 @@ We could have the data from Kaggle auto-populated - download using HTTP and unzi
 or using the kaggle Python library (https://github.com/Kaggle/kaggle-api) that makes these installs easier. 
 Either way there are credentials to pass which break a complete "runs out of the box" ideal.
 
-NOTE ON TESTING:
+## Note on data testing
 
 Given that the CSV is not enormous, we could include it in the codebase, but I'm against including data 
 inside a Git repo - data access and data versioning are a different thing from source control.

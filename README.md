@@ -22,6 +22,10 @@ source ./venv/bin/activate
 # should generate a data/model.joblib file:
 python tgplus/training.py
 
+# Optionally, run a model evaluation of the model, to get metrics;
+# this evaluation is just sketched, at this stage:
+python tgplus/evaluation.py
+
 # Run the api:
 python tgplus/api.py
 ```

@@ -15,6 +15,7 @@ matplotlib
 
 # ML:
 torch
+sklearn
 sentence-transformers
 
 # API stuff:

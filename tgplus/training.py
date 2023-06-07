@@ -136,13 +136,9 @@ def calculate_or_reload_embeddings(
     ]
 
 
-def load_data_with_embeddings(
-        test_fraction=0.1, 
-        seed=1245737,
-        allow_reuse=False
-) -> Tuple[TextWithGenresAndEmbeddings, TextWithGenresAndEmbeddings]:
+def load_data_with_embeddings(allow_reuse=False) -> TextWithGenresAndEmbeddings:
     """
-    Load the train and test data and pre-calculate embeddings for all text.
+    Load the train data and pre-calculate embeddings for all text.
 
     If the flag `allow_reuse` is set to True, we will cache the embeddings to the data folder
     for faster iteration, as calculating the embeddings for the training set is consuming. 
@@ -154,12 +150,11 @@ def load_data_with_embeddings(
     pipeline or workflow for dealing with derived data, in a way that is aware of data and code 
     version)
     """
-    training, test = get_movies_data(test_fraction=test_fraction, seed=seed)
-    return (
-        calculate_or_reload_embeddings(training, allow_reuse, 
-                                       DATA_CACHE / "embeddings_training.npy"),
-        calculate_or_reload_embeddings(test, allow_reuse,
-                                       DATA_CACHE / "embeddings_test.npy")
+    training, _test = get_movies_data()
+    return calculate_or_reload_embeddings(
+        training,
+        allow_reuse,
+        DATA_CACHE / "embeddings_training.npy"
     )
 
 # endregion
@@ -268,8 +263,8 @@ def main():
     # The goal of this script is to create the model in this path, for reuse by the API:
     model_path = DATA_CACHE / "model.joblib"
 
-    training_data, test_data = load_data_with_embeddings(allow_reuse=False)
-    print(f"Done generating embeddings - length: {len(training_data)}, {len(test_data)}")
+    training_data = load_data_with_embeddings(allow_reuse=False)
+    print(f"Done generating embeddings - length: {len(training_data)}")
 
     predictor = train_model(training_data)
     print("Model is trained")

@@ -1,0 +1,4 @@
+
+Minor stuff:
+- Automated data loading instead of currently manual CSV load (see comments in data/readme)
+- There is a warning not previously seen in notebook tests when running `make test`?

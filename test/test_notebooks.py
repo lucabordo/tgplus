@@ -75,7 +75,7 @@ def smoke_test_notebook(notebook_path: Path, cell_count: Optional[int] = None):
 
     proc = ExecutePreprocessor(
         timeout=600,
-        kernel_name='machine_learning'
+        kernel_name='tgplus'
     )
     proc.allow_errors = False
     proc.preprocess(notebook)
@@ -92,7 +92,7 @@ def test_all_notebooks(notebook_subpath):
     This is just aimed to test that the imports of the notebooks work OK,
     making such luxurious things as refactoring a tiny bit easier.
     """
-    notebook_path = NOTEBOOK_ROOT / notebook_subpath
+    notebook_path = get_project_root() / notebook_subpath
 
     # Error here would mean we changed the testing iteration logic:
     assert notebook_path.exists()

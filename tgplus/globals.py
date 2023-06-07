@@ -37,6 +37,9 @@ Embedding: TypeAlias = np.ndarray
 # This takes inputs by batches to leave room for parallel (CPU or GPU) processing:
 Encoder: TypeAlias = Callable[[Sequence[str]], Sequence[Embedding]]
 
+# A TextWithGenres enriched with pre-calculated embeddings:
+TextWithGenresAndEmbeddings: TypeAlias = List[Tuple[str, List[str], Embedding]]
+
 # endregion
 
 # region Constants

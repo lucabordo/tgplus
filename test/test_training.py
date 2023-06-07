@@ -4,8 +4,8 @@ from tempfile import TemporaryDirectory
 import numpy as np
 import pytest
 
-from tgplus.globals import DATA_CACHE, TextWithGenres, Embedding
-from tgplus.training import load_encoder, calculate_or_reload_embeddings
+from tgplus.globals import DATA_CACHE, TextWithGenres
+from tgplus.training import load_encoder, calculate_or_reload_embeddings, Embedding
 
 
 def get_dummy_text_with_genres() -> TextWithGenres:

@@ -1,5 +1,8 @@
 """
 Code for training the model.
+
+This include a main that allows this script to run end to end and save a model.
+The model can then be loaded by the service to be queried for predictions.
 """
 from pathlib import Path
 from typing import Sequence, Tuple
@@ -12,6 +15,7 @@ from tgplus.data import get_movies_data
 from tgplus.globals import (
     Encoder,
     Embedding, 
+    Predictor,
     DATA_CACHE, 
     TextWithGenres, 
     TextWithGenresAndEmbeddings
@@ -115,15 +119,22 @@ def load_data_with_embeddings(
         calculate_or_reload_embeddings(training, allow_reuse, 
                                        DATA_CACHE / "embeddings_training.npy"),
         calculate_or_reload_embeddings(test, allow_reuse,
-                                        DATA_CACHE / "embeddings_test.npy")
+                                       DATA_CACHE / "embeddings_test.npy")
     )
+
+
+def train_model(training_data: TextWithGenresAndEmbeddings) -> Predictor:
+    """
+    Given a training dataset, create and train a model, giving a predictor.
+    """
+    raise NotImplementedError
 
 
 def main():
     """
     Entry point of the training script.
     """
-    train, test = load_data_with_embeddings(allow_reuse=True)
+    train, test = load_data_with_embeddings(allow_reuse=False)
     print(f"Done with embeddings - length: {len(train)}, {len(test)}")
 
 

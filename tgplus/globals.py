@@ -30,6 +30,38 @@ DATA_CACHE = PROJECT_ROOT / "data"
 # and whether the collection is used for training, validation or test:
 TextWithGenres: TypeAlias = List[Tuple[str, List[str]]]
 
+
+class Predictor:
+    """
+    Abstract class for predictor; 
+    these are the objects whose interface has to be agreed between modeling and deployment: 
+    - training will save objects of this type; 
+    - the API will load a predictor from disk, pass data to it, and expose its results.
+    """
+
+    def __call__(self, desription: str) -> str:
+        """
+        Given a movie description, predict a genre.
+
+        Note that, following the example in the doc, we return a single genre, even though
+        the models will primarily be trained on data that has multiple genre labels per movie.
+        """
+        raise NotImplementedError
+
+    @classmethod
+    def load(cls, path: Path) -> "Predictor":
+        """
+        Load a saved model.
+        """
+        raise NotImplementedError
+
+    def save(self, path: Path) -> None:
+        """
+        Save the model to disk.
+        """
+        raise NotImplementedError
+
+
 # A 1D numpy array of dtype float that represents text embedded in some vector space:
 Embedding: TypeAlias = np.ndarray
 

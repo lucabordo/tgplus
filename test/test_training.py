@@ -24,6 +24,7 @@ def get_dummy_text_with_genres() -> TextWithGenres:
         )
     ]
 
+
 @pytest.mark.parametrize("parallel", [False, True])
 def test_basic_encoder(parallel):
     encoder_function = load_encoder(parallel=parallel)

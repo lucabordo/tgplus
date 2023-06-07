@@ -2,6 +2,38 @@
 
 This is an exploratory python project.
 
+# Quick summary
+
+```bash
+# Populate the training data 
+cp some_original_download_folder/movies_data.csv ./data/
+
+# Create the virtual environment and tooling for the project:
+make dev
+
+# Optionally, run a bunch of sanity checks on the code;
+# this includes static and unit tests:
+make checks
+
+# Activate the virtual environment that has been populated:
+source ./venv/bin/activate
+
+# Run the training script, this could take 25 minutes and
+# should generate a data/model.joblib file:
+python tgplus/training.py
+
+# Run the api
+python tgplus/api.py
+```
+
+# Assumptions
+
+I've used a Windows machine - the project scaffolding is similar to things I've used
+repeatedly in Mac and Linux, but no testing has been done for this one other than Windows.
+
+I've used Python 3.10. There is no reason why versions 3.8ish + wouldn't work. 
+But they haven't been tested, so I wouldn't bet.
+
 # Setup
 
 This project includes a Makefile that automates the steps for:

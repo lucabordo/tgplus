@@ -3,9 +3,10 @@ Access and basic processing of movies data.
 """
 import json
 from pathlib import Path
-from typing import List, Dict, TypeAlias, FrozenSet
+from typing import List
 import pandas as pd
 import tgplus
+from tgplus.globals import GENRES_TAXONOMY
 
 
 # Root path of the project:
@@ -25,40 +26,36 @@ def get_movies_table() -> pd.DataFrame:
         raise FileNotFoundError(f"CSV file needs to be manually populated under {movies_data_csv}")
 
     movies_table = pd.read_csv(movies_data_csv)
+
     # A different length here would mean a change of data version, let's not leave this silent:
     assert len(movies_table) == 45466
+    
+    # The list of genre names has been pre-computed;
+    # let's check that any data loaded matches our taxonomy
+    genre_names_in_data = {
+        name
+        for genres in movies_table["genres"]
+        for name in parse_genres(genres)
+    }
+    assert genre_names_in_data.issubset(GENRES_TAXONOMY)
+
     return movies_table
 
 
-# Dictionaries with keys "id" and "name":
-Genre: TypeAlias = Dict
-
-
-def parse_genre(genre_entry: str) -> List[Genre]:
+def parse_genres(genre_entry: str) -> List[str]:
     """
+    Get the list of genre names from an entry in the data frame. 
+
     Genres are all stored in these data in this JSON form:
     "[{'id': 12, 'name': 'Adventure'}, {'id': 14, 'name': 'Fantasy'},
       {'id': 10751, 'name': 'Family'}]"
-    which needs tweaks to parse; always returning lists of dictionaries with "id" and "name".
+    which needs:
+    - tweaks to be parsed (not proper JSON simply because of quote style?)
+    - extraction of the "name" - we ignore the ID - we'll use our own, contiguous integers.
     """
     curated = genre_entry.replace("'", '"')
     result = json.loads(curated)
     assert isinstance(result, list)
     assert all(isinstance(genre, dict) for genre in result)
     assert all(set(genre.keys()) == {"id", "name"} for genre in result)
-    return result
-
-
-def build_genre_mapping(movies_table: pd.DataFrame) -> FrozenSet[str]:
-    """
-    From the movies datable's "genre" column that has data like:
-    "[{'id': 12, 'name': 'Adventure'}, {'id': 14, 'name': 'Fantasy'},
-      {'id': 10751, 'name': 'Family'}]" ; 
-
-    gather the set of all genre names used in the data.
-    """
-    return frozenset(
-        genre["name"]
-        for genre_list in movies_table["genres"]
-        for genre in parse_genre(genre_list)
-    )
+    return [genre["name"] for genre in result]

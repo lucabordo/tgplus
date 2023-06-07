@@ -58,7 +58,7 @@ TextWithGenresAndEmbeddings: TypeAlias = List[Tuple[str, List[str], Embedding]]
 
 # region Encoding (i.e. transformation of text into embeddings)
 
-def load_encoder(parallel: bool = False) -> Encoder:
+def load_encoder(parallel: bool = False, show_progress: bool = False) -> Encoder:
     """
     Get a pre-trained encoder.
 
@@ -84,9 +84,10 @@ def load_encoder(parallel: bool = False) -> Encoder:
             assert results2d.ndim == 2
             SentenceTransformer.stop_multi_process_pool(pool)
         else:
+            sequence = tqdm(text_data, desc="Embedding") if show_progress else text_data
             results = tuple(
                 encoder.encode(text)
-                for text in tqdm(text_data, desc="Embedding")
+                for text in sequence
             )
 
         for embedding in results:
@@ -121,7 +122,7 @@ def calculate_or_reload_embeddings(
         embeddings: Sequence[Embedding] = tuple(embeddings2d)
     else:
         print(f"Calculating embeddings for {len(data)} data points")
-        encoder = load_encoder(parallel=False)
+        encoder = load_encoder(parallel=False, show_progress=True)
         embeddings = encoder([text for text, _genres in data])
         embeddings2d = np.array(embeddings)
         assert isinstance(embeddings2d, np.ndarray)

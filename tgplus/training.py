@@ -4,15 +4,24 @@ Code for training the model.
 This include a main that allows this script to run end to end and save a model.
 The model can then be loaded by the service to be queried for predictions.
 """
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Sequence, Tuple, TypeAlias, Callable, List
 
+import joblib
 import numpy as np
 from sentence_transformers import SentenceTransformer
+from sklearn.neighbors import KNeighborsClassifier
 from tqdm import tqdm
 
 from tgplus.data import get_movies_data
-from tgplus.globals import Predictor, DATA_CACHE, TextWithGenres
+from tgplus.globals import (
+    Predictor,
+    TextWithGenres,
+    DATA_CACHE,
+    GENRES_TAXONOMY,
+    one_hot_encode
+)
 
 
 # region Type definitions
@@ -104,7 +113,11 @@ def calculate_or_reload_embeddings(
         if allow_reuse:
             print("Saving embeddings to", path)
             np.save(path, embeddings2d)
-    return [(text, genre, embedding) for (text, genre), embedding in zip(data, embeddings)]
+
+    return [
+        (text, genre, embedding)
+        for (text, genre), embedding in zip(data, embeddings)
+    ]
 
 
 def load_data_with_embeddings(
@@ -135,13 +148,98 @@ def load_data_with_embeddings(
 
 # endregion
 
-# region Model from embeddings to genre
+# region Implementation of a predictor and of its training
+
+@dataclass(frozen=True)
+class ScikitLearnPredictor(Predictor):
+    """
+    A predictor based on a scikit learn model that is applies to embeddings
+    that the text has to be converted to.
+    """
+    # The scikit-learn multi-label classifier used;
+    # it may not need to be of type KNeighborsClassifier, we could probably generalise
+    # the type - if there is an appropriate scikit-kearn type definition (too many mixins)
+    # for classifiers that support multi-labelled data:
+    classifier: KNeighborsClassifier
+
+    # The encoder that the classifier has been trained against;
+    # 
+    encoder: Encoder = field(default_factory=load_encoder)
+
+    # Override
+    def __call__(self, desription: str) -> str:
+        """
+        Given a movie description, predict a genre.
+
+        Note that, following the example in the doc, we return a single genre, even though
+        the models will primarily be trained on data that has multiple genre labels per movie.
+        """
+        # Predictions should give us one probability per genre - in that order:
+        prediction_size = len(GENRES_TAXONOMY)
+
+        # Embed the text into vector space:
+        [embedding] = self.encoder([desription])
+        assert embedding.ndim == 1
+
+        # Apply the classifier to the feature vector:
+        predictions = [
+            1.0 - proba.flatten()[0]
+            for proba in self.classifier.predict_proba(embedding.reshape(1, -1))   
+        ]
+
+        # Get a (not necessarily unique) genre that is predicted with maximal probability:
+        assert len(predictions) == prediction_size
+        predicted_genre = max(
+            range(prediction_size),
+            key=lambda position: predictions[position]
+        )
+
+        # Return the genre that was picked by the one-hot encoding:
+        return GENRES_TAXONOMY[predicted_genre]
+
+    # Override
+    def save(self, path: Path) -> None:
+        """
+        Save the model to disk.
+        """
+        # NOTE: joblib is sometimes recommended for serializing scikit-learn models
+        #  though it seems to rely on pickling, which is brittle (perhaps not here)
+        #  and which I usually prefer avoid - much prefer saving a model by saving
+        # ala Torch just the weights into PT file. 
+        joblib.dump(self.classifier, path)
+
+    # Override
+    @classmethod
+    def load(cls, path: Path) -> "Predictor":
+        """
+        Load a saved model.
+        """
+        classifier = joblib.load(path)
+        assert isinstance(classifier, KNeighborsClassifier)  # for now
+        return ScikitLearnPredictor(classifier)
+
 
 def train_model(training_data: TextWithGenresAndEmbeddings) -> Predictor:
     """
     Given a training dataset, create and train a model, giving a predictor.
     """
-    raise NotImplementedError
+    # Get the embeddings and one-hot-encoded labels into the format 
+    # expected by this classifier:
+    training_x = np.array([
+        embedding
+        for _text, _genres, embedding in training_data
+    ])
+    training_y = np.array([
+        one_hot_encode(genres)
+        for _text, genres, _embedding in training_data
+    ])
+
+    # Train the model:
+    classifier = KNeighborsClassifier()  # TODO: think the parameterization!
+    classifier.fit(training_x, training_y)
+
+    # Get a predictor:
+    return ScikitLearnPredictor(classifier)
 
 # endregion
 
@@ -151,8 +249,17 @@ def main():
     """
     Entry point of the training script.
     """
-    train, test = load_data_with_embeddings(allow_reuse=False)
-    print(f"Done with embeddings - length: {len(train)}, {len(test)}")
+    # The goal of this script is to create the model in this path, for reuse by the API:
+    model_path = DATA_CACHE / "model.joblib"
+
+    training_data, test_data = load_data_with_embeddings(allow_reuse=False)
+    print(f"Done generating embeddings - length: {len(training_data)}, {len(test_data)}")
+
+    predictor = train_model(training_data)
+    print("Model is trained")
+
+    predictor.save(model_path)
+    print("Model saved under", model_path)
 
 
 if __name__ == "__main__":

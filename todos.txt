@@ -8,7 +8,7 @@ Limitations / Improvements:
 General modeling approach:
 - Consider alternatives to the embedding + simple multilabel classifier approach used here
 
-Embedding model:
+Embeddings:
 - Investigate text curation - which models are happy with non-curated text/symbols (not words or characters removed?)
 - Consider various alternatives of models (we could make configurable...)
 - Consider the options for fine tuning of the embedding model itself against relevant data -
@@ -19,6 +19,15 @@ Embedding model:
   deal with invalidation depending on version (use joblib?...)
 - Addtional checks of the embeddings (Could be UMAP-like dimensinality reduction to visualize 
   similarity, or checks that description similarity matches distance in embedding space)
+
+Model:
+- Selected model for mult-label classification needs more thinking
+- Consider a shallow (starting from single-layer) neural net with 
+  output size corresponding to one-hot encoding and multi-label loss
+- Parameterization of the model for multi-label needs more thinking 
+- We should worry about data balance - how well are classes represented
+- Any augmentatations that make sense in this model? 
+- Ultimately we'd need to optimiza hyper-parameters - given a proper evaluation!
 
 Minor stuff:
 - Automated data loading instead of currently manual CSV load (see comments in data/readme)

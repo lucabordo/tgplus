@@ -32,7 +32,7 @@ cd tgplus
 uvicorn api:app
 ```
 
-Note that the API could use some tuning; examples of queries tried:
+Note that the API could use some tuning, and can for now be queried as in the following examples:
 ```bash
 curl "http://127.0.0.1:8000/A movie about penguins in Antarctica building a spaceship to go to Mars."
 

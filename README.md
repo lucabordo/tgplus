@@ -87,7 +87,7 @@ The `tgplus` folder contains all the code:
 
 Also of interest are 
 the [`tests`](./test/) folder, 
-and the [`notebooks`](./notebooks/) which is where I 
+and the [`notebooks`](./notebooks/), which are where I 
 start most explorations (code is then largely migrated to the `tgplus` module). 
 
 # Limitations

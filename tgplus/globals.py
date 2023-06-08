@@ -12,7 +12,7 @@ import tgplus
 # Root path of the project:
 PROJECT_ROOT = Path(tgplus.__path__[0]).parent
 
-# Path where we put any data loaded from the internet:
+# Path where we put any data loaded from the internet, and any derived data:
 DATA_CACHE = PROJECT_ROOT / "data"
 
 # endregion
@@ -26,7 +26,7 @@ DATA_CACHE = PROJECT_ROOT / "data"
 # Collection of text data annotated by genre; Each entry pairs: 
 # - textual description of the movie;
 # - list of genres associated to the movie.
-# This is a common representation for data from any source, 
+# This is a common representation for data that we map any data source into,
 # and whether the collection is used for training, validation or test:
 TextWithGenres: TypeAlias = List[Tuple[str, List[str]]]
 
@@ -105,6 +105,10 @@ GENRES_TAXONOMY = (
     'War',
     'Western'
 )
+
+# endregion
+
+# region Functions
 
 def one_hot_encode(genres: List[str]) -> OneHotGenreEncoding:
     """

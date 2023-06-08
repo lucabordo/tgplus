@@ -1,5 +1,8 @@
 """
 API that exposes the movie prediction.
+
+We use FastAPI, and haven't gone very far from the initial example in the doc
+https://fastapi.tiangolo.com/
 """
 from typing import List
 from fastapi import FastAPI
@@ -39,9 +42,8 @@ def read_root(overview: str):
     """
     Entry point for the genre classification service.
 
-    Note that this is not exactly as documented, because I have note tuned GET / POST,
-    the localhost, etc. I stayed very close to the initial examples in the Fast API doc
-    https://fastapi.tiangolo.com/
+    Note that this is not exactly as documented, 
+    because I have note tuned GET / POST, the localhost, etc.
     """
     print("Received overview:", overview)
     predictor = get_predictor()

@@ -52,8 +52,8 @@ repeatedly in Mac and Linux, but no testing has been done for this one other tha
 I've used Python 3.10. There is no reason why versions 3.8ish + wouldn't work. 
 But they haven't been tested, so I wouldn't bet.
 
-No cloud resource or GPU was used for this small demo - this purely runs on a laptop, on CPU, 
-which means obiously very small-scale training.
+No cloud resource or GPU was used for this small demo - this was purely written and ran on a 
+laptop, on CPU, which means obiously very small-scale training.
 
 # Setup
 
@@ -74,8 +74,8 @@ invokes a simple series of calls to `pip`, that can also be typed manually or be
 
 # Structure of this repository
 
-There are lots of files - perhaps an overkill - but many come from a template I copy / adapt in 
-data science projects where I reuse a Makefile, tools for dealing with dependencies, configurations of 
+There are lots of files - perhaps an overkill - but many come from a template that I copy / adapt in my
+data science projects and that provides I reuse a Makefile, tools for dealing with dependencies, configurations of 
 static analysis tools that can be used optionally, etc. 
 
 The `tgplus` folder contains all the code:

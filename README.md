@@ -52,6 +52,9 @@ repeatedly in Mac and Linux, but no testing has been done for this one other tha
 I've used Python 3.10. There is no reason why versions 3.8ish + wouldn't work. 
 But they haven't been tested, so I wouldn't bet.
 
+No cloud resource or GPU was used for this small demo - this purely runs on a laptop, on CPU, 
+which means obiously very small-scale training.
+
 # Setup
 
 This project includes a Makefile that automates the steps for:
@@ -84,3 +87,8 @@ The `tgplus` folder contains all the code:
 
 You may find it interesting to look also at the `tests` folder, and the `notebooks` which is where I 
 start most explorations (code is then largely migrated to the `tgplus` module). 
+
+# Limitations
+
+There is [totos](./todos.txt) file in which I kept notes while doing prototyping.
+

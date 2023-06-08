@@ -9,7 +9,7 @@ The approach we use here is:
   of some pre-defined dimension. We do not fine-tune this model (yet the embedding
   computation consumes most of the runtime we could afford on a laptop)
 - A simple model is then used that is trained from the features defined by the embdding
-  of the input text, and with labels corresponding to a subset of the genres, that
+  of the input text, against labels corresponding to a subset of the genres, that
   are one-hot encoded (this is multi-label, in the sense that a movie can be labelled
   as Adventure and as Family, for instance).
 
@@ -19,6 +19,24 @@ A bit of care has been put into making the interplay between these components we
 so that in theory trying alternative encoders and/or classifiers should be easy;
 ultimately we'd move towards making this configurable in order to apply some amount of 
 model hyper-parameter tuning. This would need proper metrics though!
+
+For the embedding model we use a model from Hugging Face
+https://huggingface.co/sentence-transformers
+Simplicity of use has been the main consideration ATM when selecting this model,
+Hugging Face offers plenty of alternatives.
+
+For the multilabel model we went for scikit-learn, which is easy to use and here
+very fast to train. I went for a KNeighborsClassifier, mostly for ease of use here 
+again - this model is particularly easy to use with multi-label data.
+In theory, switching to any other scikit-learn model should be straightforward;
+and it would also be relatively easy to make alternative (e.g. torch-based) models
+match the same interface. 
+
+Embedding calculation takes the bulk of the runtime. To iterate faster between the 
+two steps I put in place basic caching of the embeddings into the Data/ folder.
+The generated temporary embedding files are something that should only be used when 
+iterating on the model creation, training should otherwise run end to end with
+the savings to disk discarded, as it is not version-safe.
 """
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -175,7 +193,11 @@ class ScikitLearnPredictor(Predictor):
     classifier: KNeighborsClassifier
 
     # The encoder that the classifier has been trained against;
-    # 
+    # Here we hard-code the type of encoder use;
+    # This means we can cheat, and not save any encoder state when serializing / deserializing;
+    # If this code evolves and is generalised, we should rethink that altogether so that
+    # we serialize fully self-contained objects where we guaranteed compatibility between 
+    # the encoder and classifier, consistently with what's been used at training:
     encoder: Encoder = field(default_factory=load_encoder)
 
     # Override

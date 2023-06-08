@@ -40,7 +40,7 @@ curl "http://127.0.0.1:8000/The true story of notorious gangster Romeo Corleone'
 ```
 The first movie is classified as _Documentary_ :) , the second as _Crime_.
 
-Our evaluation, very small scale, suggests an accuracy of 67% (with lots of caveats)
+Our evaluation, very small scale, suggests an accuracy of 59% (with lots of caveats)
 on a test split from the movies data - see the `eval.py` to see exactly what we mean by the test set (limited) and the metric reported.
 
 

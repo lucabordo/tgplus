@@ -1,6 +1,7 @@
 # Goal
 
-This is an exploratory python project.
+This is a little demo project exposing a simple service that 
+predicts genre given a movie description.
 
 # Cheat sheet
 

@@ -1,15 +1,15 @@
 """
 Model evaluation;
 
-I won't go very far here, just suggest how we can make an evaluation that
+This is very basic ATM, just suggest how we can make an evaluation that
 is independent of the actual implementation details of the model, allowing to 
 switch models and parameters and iterate towards good performance.
 
 Needless to say this part would normally become all-important and should be
-fleshed out as early as possible in the project - this drives iterations on the
-model.
+fleshed out as early as possible in the project - this drives iterations on the model.
 """
 from typing import Sequence, List, Dict
+from tqdm import tqdm
 
 from tgplus.data import get_movies_data
 from tgplus.training import ScikitLearnPredictor
@@ -67,8 +67,8 @@ def main() -> None:
     print(f"Done generating embeddings - length: {len(test_data)}")
 
     # HACK to make this fast to run, as embeddings will be generated:
-    print("WARNING - the data is throttled to keep this demo short!!")
-    test_data = test_data[:200]
+    # print("WARNING - the data is throttled to keep this demo short!!")
+    # test_data = test_data[:500]
 
     # Ground truth is easy to extract:
     ground_truth = [genres for _description, genres in test_data]
@@ -76,7 +76,7 @@ def main() -> None:
     # Make predictions - this will run embeddings:
     predictions = [
         predictor(description)
-        for description, _genres in test_data
+        for description, _genres in tqdm(test_data, desc="predictions")
     ]
 
     report = calculate_metric(predictions, ground_truth)

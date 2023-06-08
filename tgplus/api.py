@@ -43,10 +43,10 @@ def read_root(overview: str):
     the localhost, etc. I stayed very close to the initial examples in the Fast API doc
     https://fastapi.tiangolo.com/
     """
-    print("Received overview", overview)
+    print("Received overview:", overview)
     predictor = get_predictor()
     predicted_genre = predictor(overview)
-    print("    prediction:", predicted_genre)
+    print("Prediction:", predicted_genre)
     return {"genre": predicted_genre}
 
 

@@ -26,9 +26,22 @@ python tgplus/training.py
 # this evaluation is just sketched, at this stage:
 python tgplus/evaluation.py
 
-# Run the api:
-python tgplus/api.py
+# Get the server running the API:
+cd tgplus
+uvicorn api:app
 ```
+
+Note that the API could use some tuning; examples of queries tried:
+```bash
+curl "http://127.0.0.1:8000/A movie about penguins in Antarctica building a spaceship to go to Mars."
+
+curl "http://127.0.0.1:8000/The true story of notorious gangster Romeo Corleone's downfall."
+```
+The first movie is classified as _Documentary_ :) , the second as _Crime_.
+
+Our evaluation, very small scale, suggests an accuracy of 67% (with lots of caveats)
+on a test split from the movies data - see the `eval.py` to see exactly what we mean by the test set (limited) and the metric reported.
+
 
 # Assumptions
 

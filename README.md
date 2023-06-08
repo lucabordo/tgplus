@@ -9,7 +9,7 @@ predicts genre given a movie description.
 # Populate the training data - yes this has to be done manually:
 cp some_original_download_folder/movies_data.csv ./data/
 
-# Create the virtual environment and install any tooling for the project:
+# Create the virtual environment and install any tooling needed for the project:
 make dev
 
 # Optionally, run a bunch of sanity checks on the code;
@@ -19,7 +19,7 @@ make checks
 # Activate the virtual environment that has been populated:
 source ./venv/bin/activate
 
-# Run the training script, this could take 25 minutes and
+# Run the training script, this could take about 25 minutes and
 # should generate a data/model.joblib file:
 python tgplus/training.py
 
@@ -27,7 +27,7 @@ python tgplus/training.py
 # this evaluation is just sketched, at this stage:
 python tgplus/evaluation.py
 
-# Get the server running the API:
+# Start the server running the API:
 cd tgplus
 uvicorn api:app
 ```

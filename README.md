@@ -79,8 +79,8 @@ data science projects and that provides I reuse a Makefile, tools for dealing wi
 static analysis tools that can be used optionally, etc. 
 
 The `tgplus` folder contains all the code:
-- [globals.py](./tgplus/globals.py): Some basic constant and type definitions, shared between the loading, training and api code.
-- [data.py](./tgplus/data.py): code for loading training and test data.
+- [`globals.py`](./tgplus/globals.py): Some basic constant and type definitions, shared between the loading, training and api code.
+- [`data.py`](./tgplus/data.py): code for loading training and test data.
 - [`training.py`](./tgplus/training.py): all the ML code, and a main function that trains and saves a model used by the API.
 - [`evaluation.py`](./tgplus/evaluation.py): embryonic code for model evaluation, including a main function that displays basic metrics on test data.
 - [`api.py`](./tgplus/api.py): very basic code for an API that loads a model saved by training and predicts movie genre using it.

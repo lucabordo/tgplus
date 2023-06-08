@@ -85,7 +85,9 @@ The `tgplus` folder contains all the code:
 - [`evaluation.py`](./tgplus/evaluation.py): embryonic code for model evaluation, including a main function that displays basic metrics on test data.
 - [`api.py`](./tgplus/api.py): very basic code for an API that loads a model saved by training and predicts movie genre using it.
 
-You may find it interesting to look also at the `tests` folder, and the `notebooks` which is where I 
+Also of interest are 
+the [`tests`](./test/) folder, 
+and the [`notebooks`](./notebooks/) which is where I 
 start most explorations (code is then largely migrated to the `tgplus` module). 
 
 # Limitations

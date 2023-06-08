@@ -49,7 +49,7 @@ on a test split from the movies data - see the `eval.py` to see exactly what we 
 I've used a Windows machine - the project scaffolding is similar to things I've used
 repeatedly in Mac and Linux, but no testing has been done for this one other than Windows.
 
-I've used Python 3.10. There is no reason why versions 3.8ish + wouldn't work. 
+I've used Python 3.10. There is no reason why versions 3.7ish + wouldn't work. 
 But they haven't been tested, so I wouldn't bet.
 
 No cloud resource or GPU was used for this small demo - this was purely written and ran on a 

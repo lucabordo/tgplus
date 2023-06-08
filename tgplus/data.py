@@ -1,5 +1,8 @@
 """
 Access and basic processing of movies data.
+
+To make any change or look at the data it is useful to open the 
+associated notebook "Data/Explorations.ipynb".
 """
 import json
 from typing import List, Tuple

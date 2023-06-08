@@ -90,5 +90,5 @@ start most explorations (code is then largely migrated to the `tgplus` module).
 
 # Limitations
 
-There is [totos](./todos.txt) file in which I kept notes while doing prototyping.
-
+Note that this code implements a toy model - this is demo code only.
+There is [todos](./todos.txt) file in which I kept notes while doing prototyping.

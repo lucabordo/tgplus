@@ -82,8 +82,8 @@ The `tgplus` folder contains all the code:
 - `globals.py`: Some basic constant and type definitions, shared between the loading, training and api code.
 - `data.py`: code for loading training and test data.
 - `training.py`: all the ML code, and a main function that trains and saves a model used by the API.
-- `evaluation.py`: embryonic code for model evaluation.
-- `api.py`: the code for the API that loads a model saved by training and predicts movie genre using it.
+- `evaluation.py`: embryonic code for model evaluation, including a main function that displays basic metrics on test data.
+- `api.py`: very basic code for an API that loads a model saved by training and predicts movie genre using it.
 
 You may find it interesting to look also at the `tests` folder, and the `notebooks` which is where I 
 start most explorations (code is then largely migrated to the `tgplus` module). 

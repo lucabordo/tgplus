@@ -57,7 +57,7 @@ laptop, on CPU, which means obiously very small-scale training.
 
 # Setup
 
-This project includes a Makefile that automates the steps for:
+This project includes a [Makefile](./Makefile) that automates the steps for:
 - The creation (reproducibly) of the virtual environment needed for working on the project: `make dev`;
 - Any tooling on the code, such as static analysis, tests, to be run either locally or as part of a CI (note done): `make checks`;
 - Any other command frequently used in development/test/production and worth automating,
